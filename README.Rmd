@@ -1,0 +1,29 @@
+---
+title: "Maps"
+author: "Aditi Srinivasan"
+date: 2015-06-01
+output: md_document
+---
+
+Creating colour coded maps in R
+
+```{r malaria-aids}
+library(rworldmap)
+
+theCountries <- c("DEU", "COD", "BFA")
+# These are the ISO3 names of the countries you'd like to plot in red
+
+malDF <- data.frame(country = c("DEU", "COD", "BFA", "IND", "RUS"),
+  diseases = c(1, 1, 1, 2, 2) )
+# malDF is a data.frame with the ISO3 country names plus a variable to
+# merge to the map data
+
+malMap <- joinCountryData2Map(malDF, joinCode = "ISO3",
+  nameJoinColumn = "country")
+# This will join your malDF data.frame to the country map data
+
+mapCountryData(malMap, nameColumnToPlot="diseases", catMethod = "categorical",
+  missingCountryCol = gray(.8))
+# And this will plot it, with the trick that the color palette's first
+# color is red
+```
